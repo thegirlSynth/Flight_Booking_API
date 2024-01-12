@@ -37,8 +37,12 @@ class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     flight_id = db.Column(db.Integer, db.ForeignKey("flights.id"), nullable=False)
+    # Add other booking-related fields like seat number, booking status, etc.
 
 
 class Flight(db.Model):
     __tablename__ = "flights"
     id = db.Column(db.Integer, primary_key=True)
+    source = db.Column(db.String(250), nullable=False)
+    destination = db.Column(db.String(250), nullable=False)
+    departure_date = db.Column(db.Date, nullable=False)
