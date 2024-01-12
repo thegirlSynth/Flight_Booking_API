@@ -4,16 +4,18 @@
 
 import bcrypt
 from flask import Blueprint, jsonify, request, redirect, url_for
-from flask_login import current_user, login_user, logout_user, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, logout_user, login_required
+from flask_user import current_user
 from app.models import User, Role
 from app import db
 
 auth = Blueprint("auth", __name__)
 
+
 @auth.route("/")
 def index() -> str:
     return jsonify({"message": "Welcome to the Flight Booking API"})
+
 
 @auth.route("/home")
 def home():
@@ -21,6 +23,7 @@ def home():
         return jsonify({"message": f"Welcome to the Home Page, {current_user.name}"})
     else:
         return redirect(url_for("auth.login")), 401
+
 
 @auth.route("/signup", methods=["POST"], strict_slashes=False)
 def signup():
@@ -50,7 +53,7 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
     login_user(user)
-    #return redirect(url_for("auth.home")), 200
+    # return redirect(url_for("auth.home")), 200
     return jsonify({"message": "Logged in successfully"}), 200
 
 

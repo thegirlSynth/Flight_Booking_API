@@ -3,7 +3,7 @@
 """
 
 from flask import Blueprint, jsonify
-from flask_login import current_user, login_required
+from flask_user import current_user, login_required
 from app.models import User
 from app import db
 
@@ -14,6 +14,7 @@ users = Blueprint("users", __name__)
 @login_required
 def profile():
     # Endpoint to retrieve user profile
+    print("hello")
     user = User.query.get(current_user.id)
     return jsonify(
         {
@@ -22,4 +23,3 @@ def profile():
             "roles": [role.name for role in user.roles],
         }
     )
-

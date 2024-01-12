@@ -27,6 +27,7 @@ app.register_blueprint(users)
 
 with app.app_context():
     from app.models import User, Role, UserRoles, Booking, Flight
+
     db.create_all()
 
 user_manager = UserManager(app, db, User)
