@@ -6,6 +6,7 @@ Initialize Flask App
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_user import UserManager
 
 app = Flask(__name__)
 app.config.from_object("config.ConfigClass")
@@ -23,3 +24,9 @@ from app.users.routes import users
 app.register_blueprint(auth)
 app.register_blueprint(bookings)
 app.register_blueprint(users)
+
+with app.app_context():
+    from app.models import User, Role, UserRoles, Booking, Flight
+    db.create_all()
+
+user_manager = UserManager(app, db, User)
