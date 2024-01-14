@@ -19,6 +19,11 @@ class User(UserMixin, db.Model):
     )
     bookings = db.relationship("Booking", back_populates="user", lazy=True)
 
+    # Flask-User fields
+    password_reset_token = db.Column(db.String(100), nullable=True)
+    active = db.Column("is_active", db.Boolean(), nullable=False, server_default="1")
+    confirmed_at = db.Column(db.DateTime())
+
 
 class Role(db.Model):
     __tablename__ = "roles"
