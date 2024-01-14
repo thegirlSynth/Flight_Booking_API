@@ -1,0 +1,30 @@
+<!-- User dashboard -->
+<h2>User Dashboard</h2>
+<h3>Welcome to the Home Page, {% user %}</h3>
+
+<h3>Upcoming Flights</h3>
+{% if upcoming_flights %}
+    <ul>
+        {% for flight in upcoming_flights %}
+            <li>
+                {{ flight.flight.source }} to {{ flight.flight.destination }} on {{ flight.flight.departure_date.strftime('%Y-%m-%d %H:%M:%S') }}
+                <a href="{{ url_for('bookings.cancel_booking', flight_id=flight.id) }}">Cancel Booking</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No upcoming flights.</p>
+{% endif %}
+
+<h3>Booking History</h3>
+{% if booking_history %}
+    <ul>
+        {% for booking in booking_history %}
+            <li>
+                {{ booking.flight.source }} to {{ booking.flight.destination }} on {{ booking.flight.departure_date.strftime('%Y-%m-%d %H:%M:%S') }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No booking history.</p>
+{% endif %}

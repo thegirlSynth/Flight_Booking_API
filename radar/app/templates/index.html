@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Welcome to Radar</h1>
+    </header>
+
+    <main>
+        <section id="search-section">
+            <h2>Search for Flights</h2>
+
+            <form method="post" action="{{ url_for('bookings.search_flights') }}">
+                <label for="source">Source:</label>
+                <input type="text" name="source" required>
+
+                <label for="destination">Destination:</label>
+                <input type="text" name="destination" required>
+
+                <label for="departure_date">Departure Date:</label>
+                <input type="date" name="departure_date">
+
+                <button type="submit">Search Flights</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Radar Flight Booking</p>
+    </footer>
+
+</body>
+
+</html>
