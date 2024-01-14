@@ -90,7 +90,7 @@ def cancel_booking(booking_id):
 
     if booking.user_id == current_user.id:
         if booking.status == "canceled":
-            return jsonify({"message": "Booking already canceled!"}), 301
+            return jsonify({"message": "Booking already cancelled!"}), 301
 
         booking.status = "canceled"
         db.session.commit()
