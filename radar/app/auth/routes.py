@@ -3,7 +3,7 @@
 """
 
 import bcrypt
-from flask import Blueprint, jsonify, request, redirect, url_for
+from flask import Blueprint, jsonify, flash, request, render_template, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
 from app.models import User, Role
 from app import db
@@ -13,13 +13,7 @@ auth = Blueprint("auth", __name__)
 
 @auth.route("/")
 def index() -> str:
-    return jsonify({"message": "Welcome to the Flight Booking API"})
-
-
-@auth.route("/home", strict_slashes=False)
-@login_required
-def home():
-    return jsonify({"message": f"Welcome to the Home Page, {current_user.name}"})
+    return render_template("index.html")
 
 
 @auth.route("/signup", methods=["POST"], strict_slashes=False)
