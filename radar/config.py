@@ -26,8 +26,9 @@ class ConfigClass(object):
     MAIL_DEFAULT_SENDER = '"MyApp" <noreply@radar.com>'
 
     # Flask-User settings
-    # USER_APP_NAME = "Flask-User Basic App"
-    # USER_ENABLE_EMAIL = True
-    # USER_ENABLE_USERNAME = False
-    # USER_EMAIL_SENDER_NAME = USER_APP_NAME
-    # USER_EMAIL_SENDER_EMAIL = "noreply@eradar.com"
+    USER_APP_NAME = "Flask-User Basic App"
+    CSRF_ENABLED = True
+    USER_ENABLE_EMAIL = True
+    USER_ENABLE_USERNAME = False
+    USER_EMAIL_SENDER_NAME = USER_APP_NAME
+    USER_EMAIL_SENDER_EMAIL = "noreply@eradar.com"
