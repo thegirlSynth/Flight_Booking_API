@@ -3,6 +3,7 @@
 """
 
 from app import db
+from datetime import datetime
 from flask_login import UserMixin
 
 
@@ -37,7 +38,15 @@ class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     flight_id = db.Column(db.Integer, db.ForeignKey("flights.id"), nullable=False)
-    # Add other booking-related fields like seat number, booking status, etc.
+    date_booked = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    status = db.Column(db.String(20), nullable=False, default="pending")
+
+    # Relationships
+    user = db.relationship("User", back_populates="bookings")
+    flight = db.relationship("Flight", back_populates="bookings")
+
+    def __repr__(self):
+        return f"<Booking {self.id}, User {self.user_id}, Flight {self.flight_id}, Status {self.status}>"
 
 
 class Flight(db.Model):
@@ -46,3 +55,7 @@ class Flight(db.Model):
     source = db.Column(db.String(250), nullable=False)
     destination = db.Column(db.String(250), nullable=False)
     departure_date = db.Column(db.Date, nullable=False)
+    airline = db.Column(db.String(100), nullable=False)
+    departure_time = db.Column(db.DateTime, nullable=False)
+    arrival_time = db.Column(db.DateTime, nullable=False)
+    available_seats = db.Column(db.Integer, nullable=False)
