@@ -34,18 +34,20 @@ def signup():
     return jsonify({"message": "User created successfully"}), 201
 
 
-@auth.route("/login", methods=["POST"], strict_slashes=False)
+@auth.route("/login", methods=["GET", "POST"], strict_slashes=False)
 def login():
-    email = request.form.get("email")
-    password = request.form.get("password")
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-    user = User.query.filter_by(email=email).first()
-    if not user or not bcrypt.checkpw(password.encode("utf-8"), user.password):
-        return jsonify({"message": "Invalid credentials"}), 401
+        user = User.query.filter_by(email=email).first()
+        if not user or not bcrypt.checkpw(password.encode("utf-8"), user.password):
+            return jsonify({"message": "Invalid credentials"}), 401
 
-    login_user(user)
-    # return redirect("/home"), 200
-    return jsonify({"message": "Logged in successfully"}), 200
+        login_user(user)
+        # return redirect("/home"), 200
+        return jsonify({"message": "Logged in successfully"}), 200
+    return jsonify({"message": "You need to log in to access this page"}), 403
 
 
 @auth.route("/logout", strict_slashes=False)
