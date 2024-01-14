@@ -6,6 +6,8 @@ Initialize Flask App
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_user import UserManager
+from flask_mail import Mail
 
 # from flask_user import UserManager
 
@@ -40,3 +42,4 @@ with app.app_context():
     db.create_all()
 
 # user_manager = UserManager(app, db, User)
+mail = Mail(app)
