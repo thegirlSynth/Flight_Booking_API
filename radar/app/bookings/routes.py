@@ -2,7 +2,7 @@
 """
 """
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, flash, jsonify, request, render_template, redirect, url_for
 from flask_login import login_required, current_user
 from app.models import Booking, Flight
 from app import db
@@ -36,7 +36,27 @@ def search_flights():
         for flight in flights
     ]
 
+    # return render_template("search_results.html", flights=flights_data)
     return jsonify({"flights": flights_data})
+
+
+@bookings.route("/flight-details", methods=["POST"], strict_slashes=False)
+@login_required
+def flight_details():
+    flight_id = request.form.get("flight_id")
+    flight = Flight.query.get_or_404(flight_id)
+    flight_data = {
+        "airline": flight.airline,
+        "source": flight.source,
+        "destination": flight.destination,
+        "departure_date": flight.departure_date,
+        "departure_time": flight.departure_time.strftime("%Y-%m-%d %H:%M:%S"),
+        "arrival_time": flight.arrival_time.strftime("%Y-%m-%d %H:%M:%S"),
+        "available_seats": flight.available_seats,
+    }
+
+    return jsonify(flight_data)
+    # return render_template("/flight_details", flight_id=flight_id)
 
 
 @bookings.route("/book-flight", methods=["POST"], strict_slashes=False)
@@ -49,10 +69,12 @@ def book_flight():
     db.session.add(new_booking)
     db.session.commit()
 
+    # flash("Flight booked successfully", "success")
+    # return redirect(url_for("users.dashboard")), 201
     return (
         jsonify(
             {
-                "message": f"Flight booked successfully\n This is your booking ID: {new_booking.id}"
+                "message": f"Flight booked successfully\n. Your booking id is {new_booking.id}"
             }
         ),
         201,
@@ -60,15 +82,23 @@ def book_flight():
 
 
 @bookings.route(
-    "/cancel-booking/<int:booking_id>", methods=["DELETE"], strict_slashes=False
+    "/cancel-booking/<int:booking_id>", methods=["POST"], strict_slashes=False
 )
 @login_required
 def cancel_booking(booking_id):
     booking = Booking.query.get(booking_id)
-    if not booking:
-        return jsonify({"message": "Booking not found"}), 404
 
-    db.session.delete(booking)
-    db.session.commit()
+    if booking.user_id == current_user.id:
+        if booking.status == "canceled":
+            return jsonify({"message": "Booking already canceled!"}), 301
 
-    return jsonify({"message": "Booking cancelled"}), 200
+        booking.status = "canceled"
+        db.session.commit()
+        return jsonify({"message": "Booking canceled successfully!"}), 201
+    else:
+        return (
+            jsonify({"message": "You don't have permission to cancel this booking."}),
+            403,
+        )
+
+    # return redirect(url_for("users.dashboard")), 200
