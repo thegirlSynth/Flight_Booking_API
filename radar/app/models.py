@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     roles = db.relationship(
         "Role", secondary="user_roles", backref=db.backref("users", lazy="dynamic")
     )
-    bookings = db.relationship("Booking", backref="user", lazy=True)
+    bookings = db.relationship("Booking", back_populates="user", lazy=True)
 
 
 class Role(db.Model):
@@ -58,4 +58,8 @@ class Flight(db.Model):
     airline = db.Column(db.String(100), nullable=False)
     departure_time = db.Column(db.DateTime, nullable=False)
     arrival_time = db.Column(db.DateTime, nullable=False)
+    duration = db.Column(db.Interval, nullable=False)  # Duration in hours and minutes
+    price = db.Column(db.Float, nullable=False)
     available_seats = db.Column(db.Integer, nullable=False)
+
+    bookings = db.relationship("Booking", back_populates="flight", lazy=True)
