@@ -7,6 +7,7 @@ from flask import Blueprint, jsonify, render_template
 from flask_login import current_user, login_required
 from app.models import User, Booking
 from app import db
+from flasgger import swag_from
 
 users = Blueprint("users", __name__)
 
@@ -29,6 +30,7 @@ def profile():
 
 @users.route("/dashboard", strict_slashes=False)
 @login_required
+@swag_from("../docs/users/dashboard.yaml")
 def dashboard():
     upcoming_flights = (
         Booking.query.filter_by(user_id=current_user.id)

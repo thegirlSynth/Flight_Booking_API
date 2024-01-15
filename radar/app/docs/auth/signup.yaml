@@ -1,0 +1,17 @@
+Registers a new user
+
+---
+
+tags:
+  - Authentication
+parameters:
+  - in: formData
+    name: email
+    required: true
+
+responses:
+  401:
+    description: Invalid credentials
+
+  201:
+    description: OK

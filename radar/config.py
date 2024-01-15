@@ -32,3 +32,5 @@ class ConfigClass(object):
     USER_ENABLE_USERNAME = False
     USER_EMAIL_SENDER_NAME = USER_APP_NAME
     USER_EMAIL_SENDER_EMAIL = "noreply@eradar.com"
+
+    SWAGGER = {"title": "Flight Booking API", "uiversion": 3}

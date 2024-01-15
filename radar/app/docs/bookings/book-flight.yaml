@@ -1,0 +1,21 @@
+Book a flight
+---
+
+tags:
+  - Bookings
+
+
+parameters:
+  - in: formData
+    name: email
+    required: true
+  - in: formData
+    name: password
+    required: true
+
+responses:
+  401:
+    description: Invalid credentials
+
+  201:
+    description: OK

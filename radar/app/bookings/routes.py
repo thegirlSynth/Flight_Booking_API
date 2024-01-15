@@ -6,6 +6,8 @@ from flask import Blueprint, flash, jsonify, request, render_template, redirect,
 from flask_login import login_required, current_user
 from app.models import Booking, Flight
 from app import db
+from flasgger import swag_from
+
 
 bookings = Blueprint("bookings", __name__)
 
@@ -61,6 +63,7 @@ def flight_details():
 
 @bookings.route("/book-flight", methods=["POST"], strict_slashes=False)
 @login_required
+@swag_from("../docs/bookings/book-flight.yaml")
 def book_flight():
     user_id = current_user.id
     flight_id = request.form.get("flight_id")

@@ -8,6 +8,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_user import UserManager
 from flask_mail import Mail
+from flasgger import Swagger
+from swagger import template, swagger_config
+
 
 # from flask_user import UserManager
 
@@ -43,3 +46,4 @@ with app.app_context():
 
 # user_manager = UserManager(app, db, User)
 mail = Mail(app)
+Swagger(app, config=swagger_config, template=template)

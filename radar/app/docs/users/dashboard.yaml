@@ -1,0 +1,34 @@
+Retrieves user dashboard
+---
+tags:
+  - Users
+
+summary: Get user dashboard data
+description: Retrieve upcoming flights and booking history for the authenticated user's dashboard.
+parameters: []
+
+responses:
+  200:
+    description: Successful response
+    content:
+      application/json:
+        example:
+          upcoming_flights:
+            - source: "Source City"
+              destination: "Destination City"
+              departure_date: "2023-01-15 12:00:00"
+              status: "confirmed"
+            - source: "Another Source"
+              destination: "Another Destination"
+              departure_date: "2023-02-20 14:30:00"
+              status: "pending"
+          booking_history:
+            - source: "Previous Source"
+              destination: "Previous Destination"
+              departure_date: "2022-12-10 08:45:00"
+              status: "completed"
+            - source: "Cancelled Source"
+              destination: "Cancelled Destination"
+              departure_date: "2022-11-05 19:15:00"
+              status: "canceled"
+          user: "John Doe"

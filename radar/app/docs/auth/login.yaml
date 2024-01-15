@@ -1,0 +1,18 @@
+Log in a user
+---
+tags:
+  - Authentication
+
+description: Log in a previously registered user.
+parameters:
+  - name: email
+    in: formData
+    required: true
+  - name: password
+    in: formData
+    required: true
+responses:
+  401:
+    description: Invalid credentials
+  201:
+    description: Logged in successfully
